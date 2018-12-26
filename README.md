@@ -1,5 +1,5 @@
 # groupMeToGooglePhotos
-This script allows you to connect to groupme and pull all associated images and push them to google photos...Atleast I hope so lol. Gotta look at Google Photos API.
+This script allows you to connect to groupme and pull all associated images and push them to google photos...Atleast I hope so lol. Gotta look at Google Photos API and see if I can get download the image from groupme cdn.
 <!DOCTYPE html>
 <h1>Hey, I'm Khalif and welcome to groupMeToGooglePhotos</h1>
 
