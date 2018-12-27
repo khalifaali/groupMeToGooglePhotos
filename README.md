@@ -49,7 +49,8 @@ to display its respective messages
 You will need to call select_group_messages() before you call this method. once you do this, some of the messages will display( ~600 ) will display.
 I will allow you to set limits when I have some more time, this is what I used for testing.
 <br><code>gp.load_group_messages()</code>
-<em>Update</em> Added functionality so that when you download images it saves to them to a directory named after the groupchat.
+
+<br><em>Update</em> Added functionality so that when you download images it saves to them to a directory named after the groupchat.
 I added an exception if the save folder exists in the current working directory it will just make that the save directory instead
 of recreating the directory.
 
