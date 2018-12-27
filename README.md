@@ -16,7 +16,7 @@ to search for faces, places, etc. So I sat and decided that I will use the Group
 
 from gm_parse import Gm_Parser as g_parser
 
-gp = g_parser('insert access token', 'insert groupme application name')
+gp = g_parser('insert access token')
 gp.get_groups()
 
 gp.select_group_messages()
