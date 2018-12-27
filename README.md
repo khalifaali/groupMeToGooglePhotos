@@ -1,15 +1,14 @@
 # groupMeToGooglePhotos
-This script allows you to connect to groupme and pull all associated images and push them to google photos...Atleast I hope so lol. Gotta look at Google Photos API and see if I can get download the image from groupme cdn.
 
-<em> Update! </em>I can do all those things in the description. Essentially the script will pull as many pictures as you want and save them in the current working directory in a folder named after the selected group chat.
+Essentially the script will pull as many pictures as you want and save them in the current working directory in a folder named after the selected group chat.Then it will upload them to google photos.
 <!DOCTYPE html>
 <h1>Hey, I'm Khalif and welcome to groupMeToGooglePhotos</h1>
 
 <p>For me the groupme gallery lacked the robustness of google photos and I found it quite hard to look for pictures because there was no way
 to search for faces, places, etc. So I sat and decided that I will use the GroupMe API and Google Photos API to help me achieve this goal</p>
 
-<p>The script is still a work in progress but as of right now you can load group messages, and find pictures. I have plans to add upload
- pictures to google photos within the next few days </p>
+<p>The script is still a work in progress but as of right now you can load group messages, and save pictures in a directory named after
+ the target groupchat. I have plans to add functionality to allow you to upload pictures to google photos within the next few days </p>
 
 
 <h2>Here is an example of how to use the code that I have written</h2>
