@@ -9,10 +9,10 @@ class Gm_Parser:
     group_params = {'per_page': '6'}
     message_params = {'limit': '100', 'before_id': None}
 
-    def __init__(self, token, user_agent):
+    def __init__(self, token):
         access_token = ''.join((i if ord(i) < 10000 else '\ufffd' for i in token))
 
-        self.header = {'User-Agent': user_agent,
+        self.header = {'User-Agent': 'bot',
                        'Host': 'api.groupme.com',
                        'Accept': '*/*',
                        'X-Access-Token': access_token}
@@ -74,27 +74,36 @@ class Gm_Parser:
         print('Selected Group chat is ', group_message['name'])
 
         self.message_url = self.url + '/groups/' + group_message['id'] + '/messages'
-        messages = self.request(self.message_url, target_params=self.message_params)
-        self.message_params['before_id'] = messages['messages'][0]['id']
 
-    def load_group_messages(self):
+    def load_group_messages(self, txts_per_page=None):
+
+        if txts_per_page is None or txts_per_page < '0' or txts_per_page > '100':
+            txts_per_page = '100'
+
+        self.message_params['limit'] = txts_per_page
+
+        '''
+         We need to set a variable so that we can refresh the page with an  certain amount of 
+         messages without intervention
+         
+         we may be able to solve this by using an optional argument  
+        '''
+
         chat_log = self.request(self.message_url, target_params=self.message_params)
-        k = 0
-        while (k < 6):
-            # retrieve everything before the most recent message in the set
-            # investigate the messages that are being ommitted
-            # print message before issuing the new request
-            oldest_message_id = self.message_params['before_id']
 
-            print(json.dumps(chat_log['messages'][0]['text']))
+        # while text_loads < 2:
+        # retrieve everything before the most recent message in the set
+        # investigate the messages that are being ommitted
+        # print message before issuing the new request
+        # print(json.dumps(chat_log['messages'][0]['text']))
 
-            self.message_params['before_id'] = chat_log['messages'][0]['id']
+        self.message_params['before_id'] = chat_log['messages'][0]['id']
+        # print(json.dumps(chat_log['messages'][0]['text']))
+        for message_index, message_text in enumerate(chat_log['messages'][:-1]):
+            if len(message_text['attachments']) > 0 \
+                    and message_text['attachments'][0]['type'] == 'image':
+                phrase = json.dumps(message_text['text'])
+                image_url = message_text['attachments'][0]['url']
+                print('text: ', phrase, 'image url: ', image_url)
 
-            print(json.dumps(chat_log['messages'][0]['text']))
-            chat_log = self.request(self.message_url, target_params=self.message_params)
-            for message_index, message_text in enumerate(chat_log['messages'][:-1]):
-                if len(message_text['attachments']) > 0 \
-                        and message_text['attachments'][0]['type'] == 'image':
-                    print('IMAGE FOUND!!')
-                    print(json.dumps(message_text['text']))
-                    print('IMAGE URL: ', message_text['attachments'][0]['url'])
+        self.message_params['before_id'] = chat_log['messages'][-1]['id']
