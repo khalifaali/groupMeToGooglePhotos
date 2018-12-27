@@ -42,8 +42,6 @@ class Gm_Parser:
         self.limit_for_pictures = None
         self.amount_pictures_seen = 0
 
-        # create these in the initialization
-
     def set_pix_limit(self, amount):
         self.limit_for_pictures = amount
 
@@ -76,17 +74,6 @@ class Gm_Parser:
             self.group_ids.append({'name': result[index]['name'], 'id': result[index]['id']})
             self.group_ids[index]['name'] = self.scrub_filename(self.group_ids[index]['name'])
 
-    '''
-        for index in range(len(result)):
-            # create new group ids that can be used later to save Name_of_Group : Group_Id
-            result_group_ids = {}
-            # make group selection easier on the user we can create a dictionary that uses group index to retrieve group
-            #   id, and name
-
-            result_group_ids[result[index]['name']] = result[index]['id']
-            self.group_ids.append(result_group_ids)
-'''
-
     def print_groups(self):
 
         if len(self.group_ids) == 0:
@@ -115,15 +102,6 @@ class Gm_Parser:
     def scrub_filename(self, filename):
         return re.sub('[<>:?*\\\/]', '', filename)
 
-    def is_chat_end(self, chat_log):
-        # chat_log['messages'][0]['id'] is the most recent chat
-        # chat_log['messages'][-1]['id'] is the oldest chat
-        # if they are equal that means we have reached the end of the chat long
-        # thus we just return the result of that comparison
-        # I negated it because if its true we want to stop, if false we want to continue so we can negate it and use
-        # it in a loop
-        return not (chat_log['messages'][0]['id'] == chat_log['messages'][-1]['id'])
-
     def load_group_messages(self, txts_per_page=None):
 
         if txts_per_page is None or txts_per_page < 0 or txts_per_page > 100:
@@ -131,18 +109,13 @@ class Gm_Parser:
 
         self.message_params['limit'] = str(txts_per_page)
 
-        '''
-         We need to set a variable so that we can refresh the page with an  certain amount of 
-         messages without intervention
-         
-         we may be able to solve this by using an optional argument  
-        '''
+        # if we can't request the previous message we have reached the end of all historical messages so abort function
+        # by returning False
         try:
             chat_log = self.request(self.message_url, target_params=self.message_params)
         except:
             return False
 
-        # while text_loads < 2:
         # retrieve everything before the most recent message in the set
         # investigate the messages that are being ommitted
         # print message before issuing the new request
