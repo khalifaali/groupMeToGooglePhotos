@@ -1,6 +1,6 @@
 # groupMeToGooglePhotos
 
-Essentially the script will pull as many pictures as you want and save them in the current working directory in a folder named after the selected group chat.Then it will upload them to google photos.
+Essentially the script will pull as many pictures as you want and save them in the current working directory in a folder named after the selected group chat.Then it will upload them to google photos. Written using Python 3.7.0
 <!DOCTYPE html>
 <h1>Hey, I'm Khalif and welcome to groupMeToGooglePhotos</h1>
 
@@ -17,11 +17,16 @@ to search for faces, places, etc. So I sat and decided that I will use the Group
 
 from gm_parse import Gm_Parser as g_parser
 
-gp = g_parser('insert access token')
-gp.get_groups()
 
+gp = g_parser('')
+gp.get_groups()
 gp.select_group_messages()
-gp.load_group_messages()
+gp.set_pix_limit(4) # optional function --> used to set the amount of pictures you want to save per group message load
+gp.load_group_messages(txts_per_page=4)  # optional argument txts_per_page --> controls amount of messages displayed
+while gp.load_group_messages():  # historically load messages with respect to picture limit, and message load limits
+    continue
+print('Done')
+
 
 </pre>
 
@@ -45,7 +50,7 @@ to display its respective messages
 <br><code>gp.select_group_messages()</code>
 
 <h3>Display groupchat messages</h3>
-You will need to call select_group_messages() before you call this method. once you do this, some of the messages will display( ~600 ) will display.
+You will need to call select_group_messages() before you call this method. once you do this, some of the messages will display( ~100 for the default limit I set ) will display.
 I will allow you to set limits when I have some more time, this is what I used for testing.
 <br><code>gp.load_group_messages()</code>
 
@@ -53,22 +58,36 @@ I will allow you to set limits when I have some more time, this is what I used f
 I added an exception if the save folder exists in the current working directory it will just make that the save directory instead
 of recreating the directory.
 
+<h2>Optional Functions/Arguments for functions</h2>
++Set amount of pictures you want to save by providing a number to the amount argument. If no limit is present will save all images in group message gallery
+<code>set_pix_limit(amount)</code>
+  --This must be called before load_group_messages() to take effect.
+
++Set amount of messages displayed by assigning a number to txts_per_page keyword argument
+<code>load_group_messages(txts_per_page=None)</code>
+
++Set amount of group chats displayed by providing a number for the amount argument. Default is 10, no max was given in GroupMe API documentation
+<code>set_groups_per_page(amount):</code>
+ --This must be called before get_groups() to take effect.
+
+
+
+
 <h2> And thats all for now folks. Check back if you wanna see some more</h2>
 
+
 <ul><em><b>Todo list</b></em>
- <li>V1.2 Enable an option that lets you select how many pictures are pulled back </li>
- <li>Write regex to remove invalid characters from groupme names</li>
- <li>Refactor https://github.com/khalifaali/groupMeToGooglePhotos/blob/dc10a7b91b88497871aea64167dab9583ee5624d/gm_parse.py#L111</li>
- <li>Figure out how to go back to first groupme message. Write method to return False if the method reaches the end. Perhaps if the
- before_id is the same after we flip the list then we know we are at the end...hmmmmm maybe pre-flip mess_id[0] == mess_id[-1] then return false..???</li>
+ <li>After photos have been uploaded to Google Photos get shareable link</li>
+ <li><strike>V1.2 Enable an option that lets you select how many pictures are pulled back</strike> </li>
+ <li><strike>v1.2Enable option to allow you to select how many groups are shown</strike></li>
+ <li><strike>Write regex to remove invalid characters from groupme names</strike></li>
+ <li><strike>Refactor https://github.com/khalifaali/groupMeToGooglePhotos/blob/dc10a7b91b88497871aea64167dab9583ee5624d/gm_parse.py#L111</strike></li>
+ <li><strike>Figure out how to go back to first groupme message. Write method to return False if the method reaches the end. Perhaps if the
+ before_id is the same after we flip the list then we know we are at the end...hmmmmm maybe pre-flip mess_id[0] == mess_id[-1] then return false..???</strike></li>
   <li><strike>Figure out how to save photos on local storage</strike></li>
- <li>Successfully saved photos! I did have to save them to local storage so that I can upload using google photos API</li>
-  <li>answer  ^^^ https://developers.google.com/photos/library/guides/upload-media </li>
-  <li>Figure out how to add users in groupme to the shared album so that they can see photos</li>
+  <li>Review https://developers.google.com/photos/library/guides/upload-media to connect Google Photos API</li>
   <li> <strike>Support to allow you to refresh messages in a more intuitive way.</strike></li>
-   <li>I took out the test loops so you can write a loop around load_group_messages()</li>
- <li> <strike>Support to allow you to select how many messages you want to see per load</strike></li>
-  <li>Support to allow script to connect to google photos API</li>
+ <li><strike>Support to allow you to select how many messages you want to see per load</strike></li>
 </ul>
 
 <ul><em><b>Personal plans for script and other groupMe api projects</b></em>
