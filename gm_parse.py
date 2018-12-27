@@ -74,22 +74,13 @@ class Gm_Parser:
             self.group_ids.append({'name': result[index]['name'], 'id': result[index]['id']})
             self.group_ids[index]['name'] = self.scrub_filename(self.group_ids[index]['name'])
 
-    def print_groups(self):
-
-        if len(self.group_ids) == 0:
-            return 'Group ids are empty please run get_groups method'
-        for group in self.group_ids:
-            print(group['name'])
-
-        # choose group
-
     def select_group_messages(self):
         if len(self.group_ids) == 0:
             return 'groups are empty'
 
         print('Which Group Messages Would you like to see? \n')
         for index, value in enumerate(self.group_ids):
-            print("Choice: ", index, " GroupChat ", value)
+            print("Choice: ", index, " GroupChat ", value['name'])
 
         choice = int(input('\n Select the appropriate index...'))
         group_message = self.group_ids[choice]
@@ -131,20 +122,26 @@ class Gm_Parser:
             # if we can't create the folder then we know it already exists
             save_folder = cwd + '\\' + self.selected_group_name
 
+        # save_file_types is an object that will choose the format to save depending on the attachment type in GM
+        save_file_types = {'image': '.jpeg', 'video': '.mp4'}
         for message_text in chat_log['messages']:
             # print(json.dumps(message_text['text']))
 
             if len(message_text['attachments']) > 0 \
-                    and message_text['attachments'][0]['type'] == 'image':
+                    and (message_text['attachments'][0]['type'] == 'image'
+                         or message_text['attachments'][0]['type'] == 'video'):
+
+                attachment_type = message_text['attachments'][0]['type']
                 # use json.dumps because the text will have emojis so we do this to ignore them
-                phrase = json.dumps(message_text['text'])
+
                 phrase_id = message_text['id']
                 image_url = message_text['attachments'][0]['url']
                 # save_folder = '\\Pictures\\'
                 # phrase id is a particular text id
                 # urllib.request.retrieve will save the remote file for us
-                save_file = save_folder + '\\jpeg' + str(phrase_id) + '.jpeg'
+                save_file = save_folder + '\\' + str(phrase_id) + save_file_types[attachment_type]
                 urllib.request.urlretrieve(image_url, filename=save_file)
+                print(message_text['attachments'][0])
                 # print('text: ', phrase, 'image url: ', image_url)
 
                 if self.limit_for_pictures is not None:
