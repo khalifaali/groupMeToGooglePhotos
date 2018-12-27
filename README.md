@@ -18,7 +18,7 @@ to search for faces, places, etc. So I sat and decided that I will use the Group
 from gm_parse import Gm_Parser as g_parser
 
 
-gp = g_parser('')
+gp = g_parser('set access token')
 gp.get_groups()
 gp.select_group_messages()
 gp.set_pix_limit(4) # optional function --> used to set the amount of pictures you want to save per group message load
