@@ -158,7 +158,7 @@ class Gm_Parser:
             # if we can't create the folder then we know it already exists
             save_folder = cwd + '\\' + self.selected_group_name
 
-        for message_text in chat_log['messages'][0:]:
+        for message_text in chat_log['messages']:
             # print(json.dumps(message_text['text']))
 
             if len(message_text['attachments']) > 0 \
