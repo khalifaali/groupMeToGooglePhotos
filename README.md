@@ -57,6 +57,7 @@ of recreating the directory.
 
 <ul><em><b>Todo list</b></em>
  <li>Write regex to remove invalid characters from groupme names</li>
+ <li>Refactor https://github.com/khalifaali/groupMeToGooglePhotos/blob/dc10a7b91b88497871aea64167dab9583ee5624d/gm_parse.py#L111</li>
  <li>Figure out how to go back to first groupme message. Write method to return False if the method reaches the end. Perhaps if the
  before_id is the same after we flip the list then we know we are at the end...hmmmmm maybe pre-flip mess_id[0] == mess_id[-1] then return false..???</li>
   <li><strike>Figure out how to save photos on local storage</strike></li>
