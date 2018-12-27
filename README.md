@@ -1,5 +1,7 @@
 # groupMeToGooglePhotos
 This script allows you to connect to groupme and pull all associated images and push them to google photos...Atleast I hope so lol. Gotta look at Google Photos API and see if I can get download the image from groupme cdn.
+
+<em> Update! </em>I can do all those things in the description. Essentially the script will pull as many pictures as you want and save them in the current working directory in a folder named after the selected group chat.
 <!DOCTYPE html>
 <h1>Hey, I'm Khalif and welcome to groupMeToGooglePhotos</h1>
 
@@ -47,11 +49,15 @@ to display its respective messages
 You will need to call select_group_messages() before you call this method. once you do this, some of the messages will display( ~600 ) will display.
 I will allow you to set limits when I have some more time, this is what I used for testing.
 <br><code>gp.load_group_messages()</code>
+<em>Update</em> Added functionality so that when you download images it saves to them to a directory named after the groupchat.
+I added an exception if the save folder exists in the current working directory it will just make that the save directory instead
+of recreating the directory.
 
 <h2> And thats all for now folks. Check back if you wanna see some more</h2>
 
-<ul><em><b>Future Updates</b></em>
-  <li>Figure out how to save photos. Will I have to save them to local storage then upload?</li>
+<ul><em><b>Todo list</b></em>
+  <li><strike>Figure out how to save photos on local storage</strike></li>
+ <li>Successfully saved photos! I did have to save them to local storage so that I can upload using google photos API</li>
   <li>answer  ^^^ https://developers.google.com/photos/library/guides/upload-media </li>
   <li>Figure out how to add users in groupme to the shared album so that they can see photos</li>
   <li> <strike>Support to allow you to refresh messages in a more intuitive way.</strike></li>
