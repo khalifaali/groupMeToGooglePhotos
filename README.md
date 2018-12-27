@@ -1,6 +1,6 @@
 # groupMeToGooglePhotos
 
-Essentially the script will pull as many pictures as you want and save them in the current working directory in a folder named after the selected group chat.Then it will upload them to google photos. Written using Python 3.7.0
+Essentially the script will pull as many pictures and videos you want and save them in the current working directory in a folder named after the selected group chat. All media saved will be named after its message ID given by groupme. Then it will upload that saved media to google photos. Written using Python 3.7.0
 <!DOCTYPE html>
 <h1>Hey, I'm Khalif and welcome to groupMeToGooglePhotos</h1>
 
@@ -17,13 +17,10 @@ to search for faces, places, etc. So I sat and decided that I will use the Group
 
 from gm_parse import Gm_Parser as g_parser
 
-
 gp = g_parser('set access token')
 gp.get_groups()
 gp.select_group_messages()
-gp.set_pix_limit(4) # optional function --> used to set the amount of pictures you want to save per group message load
-gp.load_group_messages(txts_per_page=4)  # optional argument txts_per_page --> controls amount of messages displayed
-while gp.load_group_messages():  # historically load messages with respect to picture limit, and message load limits
+while gp.load_group_messages(): 
     continue
 print('Done')
 
@@ -50,7 +47,7 @@ to display its respective messages
 <br><code>gp.select_group_messages()</code>
 
 <h3>Display groupchat messages</h3>
-You will need to call select_group_messages() before you call this method. once you do this, some of the messages will display( ~100 for the default limit I set ) will display.
+You will need to call select_group_messages() before you call this method. once you do this, some of the messages will display( ~100 for the default limit I set ) will display. The function will return True if there are more messages that can be loaded.
 I will allow you to set limits when I have some more time, this is what I used for testing.
 <br><code>gp.load_group_messages()</code>
 
@@ -59,7 +56,7 @@ I added an exception if the save folder exists in the current working directory 
 of recreating the directory.
 
 <h2>Optional Functions/Arguments for functions</h2>
-+Set amount of pictures you want to save by providing a number to the amount argument. If no limit is present will save all images in group message gallery
++Set amount of pictures and videos you want to save by providing a number to the amount argument. If no limit is present will save all images in group message gallery. Currently I haven't developed a solution to pull back just pictures or just videos. Suggested update could be to pass an optional flag into load messages that lets you specify what media you want back
 
 <code>set_pix_limit(amount)</code><br>
   --This must be called before load_group_messages() to take effect.
@@ -78,6 +75,8 @@ of recreating the directory.
 
 
 <ul><em><b>Todo list</b></em>
+ <li>v1.3 Add support to allow you to control what type of media you want pulled back whether it be pictures or videos</li> 
+ <li>Rename anything that has pix in its name to media o that is agnostic to the user and more fluid</li>
  <li>After photos have been uploaded to Google Photos get shareable link</li>
  <li><strike>V1.2 Enable an option that lets you select how many pictures are pulled back</strike> </li>
  <li><strike>v1.2Enable option to allow you to select how many groups are shown</strike></li>
