@@ -1,5 +1,4 @@
-import requests
-import json
+import requests, json, urllib.request, os
 
 
 class Gm_Parser:
@@ -21,6 +20,7 @@ class Gm_Parser:
         self.message_results = dict
         self.oldest_message_id = None
         self.message_url = None
+        self.selected_group_name = None
 
         # create these in the initialization
 
@@ -74,6 +74,7 @@ class Gm_Parser:
         print('Selected Group chat is ', group_message['name'])
 
         self.message_url = self.url + '/groups/' + group_message['id'] + '/messages'
+        self.selected_group_name = group_message['name']
 
     def load_group_messages(self, txts_per_page=None):
 
@@ -96,14 +97,36 @@ class Gm_Parser:
         # investigate the messages that are being ommitted
         # print message before issuing the new request
         # print(json.dumps(chat_log['messages'][0]['text']))
+        k = 0
 
         self.message_params['before_id'] = chat_log['messages'][0]['id']
         # print(json.dumps(chat_log['messages'][0]['text']))
+
         for message_index, message_text in enumerate(chat_log['messages'][:-1]):
+            print(json.dumps(message_text['text']))
             if len(message_text['attachments']) > 0 \
                     and message_text['attachments'][0]['type'] == 'image':
                 phrase = json.dumps(message_text['text'])
+
+                phrase_id = message_text['id']
                 image_url = message_text['attachments'][0]['url']
+                # save_folder = '\\Pictures\\'
+
+                cwd = os.getcwd()
+                try:
+                    save_folder = cwd + '\\' + self.selected_group_name
+                    os.mkdir(save_folder)
+                except FileExistsError:
+                    #if we can't create the folder then we know it already exists
+                    save_folder = cwd + '\\' + self.selected_group_name
+
+                # phrase id is a particular text id
+                # urllib.request.retrieve will save the remote file for us
+                save_file = save_folder + '\\jpeg' + str(phrase_id) + '.jpeg'
+                urllib.request.urlretrieve(image_url, filename=save_file)
                 print('text: ', phrase, 'image url: ', image_url)
+                k += 1
+            if k == 2:
+                break
 
         self.message_params['before_id'] = chat_log['messages'][-1]['id']
