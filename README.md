@@ -54,9 +54,9 @@ I will allow you to set limits when I have some more time, this is what I used f
   <li>Figure out how to save photos. Will I have to save them to local storage then upload?</li>
   <li>answer  ^^^ https://developers.google.com/photos/library/guides/upload-media </li>
   <li>Figure out how to add users in groupme to the shared album so that they can see photos</li>
-  <strike><li>Support to allow you to refresh messages in a more intuitive way.</li>
+  <li> <strike>Support to allow you to refresh messages in a more intuitive way.</strike></li>
    <li>I took out the test loops so you can write a loop around load_group_messages()</li>
-  <strike><li>Support to allow you to select how many messages you want to see per load</li>
+ <li> <strike>Support to allow you to select how many messages you want to see per load</strike></li>
   <li>Support to allow script to connect to google photos API</li>
 </ul>
 
