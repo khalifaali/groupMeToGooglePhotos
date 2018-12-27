@@ -97,7 +97,6 @@ class Gm_Parser:
         # investigate the messages that are being ommitted
         # print message before issuing the new request
         # print(json.dumps(chat_log['messages'][0]['text']))
-        k = 0
 
         self.message_params['before_id'] = chat_log['messages'][0]['id']
         # print(json.dumps(chat_log['messages'][0]['text']))
@@ -125,8 +124,6 @@ class Gm_Parser:
                 save_file = save_folder + '\\jpeg' + str(phrase_id) + '.jpeg'
                 urllib.request.urlretrieve(image_url, filename=save_file)
                 print('text: ', phrase, 'image url: ', image_url)
-                k += 1
-            if k == 2:
-                break
+
 
         self.message_params['before_id'] = chat_log['messages'][-1]['id']
