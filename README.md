@@ -60,14 +60,15 @@ of recreating the directory.
 
 <h2>Optional Functions/Arguments for functions</h2>
 +Set amount of pictures you want to save by providing a number to the amount argument. If no limit is present will save all images in group message gallery
-<code>set_pix_limit(amount)</code>
+
+<code>set_pix_limit(amount)</code><br>
   --This must be called before load_group_messages() to take effect.
 
 +Set amount of messages displayed by assigning a number to txts_per_page keyword argument
 <code>load_group_messages(txts_per_page=None)</code>
 
-+Set amount of group chats displayed by providing a number for the amount argument. Default is 10, no max was given in GroupMe API documentation
-<code>set_groups_per_page(amount):</code>
++Set amount of group chats displayed by providing a number for the amount argument. Default is 10, no max was given in GroupMe API documentation<br>
+<code>set_groups_per_page(amount):</code><br>
  --This must be called before get_groups() to take effect.
 
 
