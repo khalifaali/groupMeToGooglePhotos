@@ -31,8 +31,8 @@ I chose to do the following
 <br><code>from gm_parse import Gm_Parser as g_parser</code>
 
 <h3> Set access token and application name </h3>
-Here you will need to pass your access token given to you by the GroupMe API services, along with your application name that you made at signup
-<br><code>gp = g_parser('insert access token', 'insert groupme application name')</code>
+Here you will need to pass your access token given to you by the GroupMe API services
+<br><code>gp = g_parser('insert access token')</code>
 
 <h3>Retrieve groupchats</h3>
 To get some of your available groupchats call the get_groups which will return an array of dictionaries that will have your groupchat name and groupchat ids'
