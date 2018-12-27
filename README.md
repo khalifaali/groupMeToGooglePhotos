@@ -59,7 +59,7 @@ of recreating the directory.
 <ul><em><b>Todo list</b></em>
  <li>Write regex to remove invalid characters from groupme names</li>
  <li>Figure out how to go back to first groupme message. Write method to return False if the method reaches the end. Perhaps if the
- before_id is the same after we flip the list then we know we are at the end...hmmmmm</li>
+ before_id is the same after we flip the list then we know we are at the end...hmmmmm maybe pre-flip mess_id[0] == mess_id[-1] then return false..???</li>
   <li><strike>Figure out how to save photos on local storage</strike></li>
  <li>Successfully saved photos! I did have to save them to local storage so that I can upload using google photos API</li>
   <li>answer  ^^^ https://developers.google.com/photos/library/guides/upload-media </li>
