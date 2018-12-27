@@ -100,6 +100,13 @@ class Gm_Parser:
 
         self.message_params['before_id'] = chat_log['messages'][0]['id']
         # print(json.dumps(chat_log['messages'][0]['text']))
+        cwd = os.getcwd()
+        try:
+            save_folder = cwd + '\\' + self.selected_group_name
+            os.mkdir(save_folder)
+        except FileExistsError:
+            # if we can't create the folder then we know it already exists
+            save_folder = cwd + '\\' + self.selected_group_name
 
         for message_index, message_text in enumerate(chat_log['messages'][:-1]):
             print(json.dumps(message_text['text']))
@@ -110,15 +117,6 @@ class Gm_Parser:
                 phrase_id = message_text['id']
                 image_url = message_text['attachments'][0]['url']
                 # save_folder = '\\Pictures\\'
-
-                cwd = os.getcwd()
-                try:
-                    save_folder = cwd + '\\' + self.selected_group_name
-                    os.mkdir(save_folder)
-                except FileExistsError:
-                    #if we can't create the folder then we know it already exists
-                    save_folder = cwd + '\\' + self.selected_group_name
-
                 # phrase id is a particular text id
                 # urllib.request.retrieve will save the remote file for us
                 save_file = save_folder + '\\jpeg' + str(phrase_id) + '.jpeg'
