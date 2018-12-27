@@ -56,6 +56,7 @@ of recreating the directory.
 <h2> And thats all for now folks. Check back if you wanna see some more</h2>
 
 <ul><em><b>Todo list</b></em>
+ <li>V1.2 Enable an option that lets you select how many pictures are pulled back </li>
  <li>Write regex to remove invalid characters from groupme names</li>
  <li>Refactor https://github.com/khalifaali/groupMeToGooglePhotos/blob/dc10a7b91b88497871aea64167dab9583ee5624d/gm_parse.py#L111</li>
  <li>Figure out how to go back to first groupme message. Write method to return False if the method reaches the end. Perhaps if the
