@@ -46,8 +46,8 @@ You will need to call get_groups() before you call this method. Once you do this
 to display its respective messages
 <br><code>gp.select_group_messages()</code>
 
-<h3>Display groupchat messages</h3>
-You will need to call select_group_messages() before you call this method. once you do this, some of the messages will display( ~100 for the default limit I set ) will display. The function will return True if there are more messages that can be loaded.
+<h3>Save media</h3>
+You will need to call select_group_messages() before you call this method. <code>load_group_messages()</code> pulls back group messages, and calls the <code> save_media</code> function to download media from the groupMe gallery. The function will return True if there are more messages that can be loaded.
 I will allow you to set limits when I have some more time, this is what I used for testing.
 <br><code>gp.load_group_messages()</code>
 
@@ -75,8 +75,8 @@ of recreating the directory.
 
 
 <ul><em><b>Todo list</b></em>
- <li>v1.3 Add support to allow you to control what type of media you want pulled back whether it be pictures or videos</li> 
- <li>Rename anything that has pix in its name to media o that is agnostic to the user and more fluid</li>
+ <li>v1.3 Add support to allow you to control what type of media you want pulled back whether it be pictures or videos</strike></li> 
+ <li><strike>Rename anything that has pix in its name to media o that is agnostic to the user and more fluid</strike></li>
  <li>After photos have been uploaded to Google Photos get shareable link</li>
  <li><strike>V1.2 Enable an option that lets you select how many pictures are pulled back</strike> </li>
  <li><strike>v1.2Enable option to allow you to select how many groups are shown</strike></li>
