@@ -39,17 +39,18 @@ class Gm_Parser:
         self.oldest_message_id = None
         self.message_url = None
         self.selected_group_name = None
-        self.limit_for_pictures = None
-        self.amount_pictures_seen = 0
+        self.limit_for_media = None
+        self.media_seen = 0
+        self.save_media_complete = None
 
-    def set_pix_limit(self, amount):
-        self.limit_for_pictures = amount
+    def set_media_limit(self, amount):
+        self.limit_for_media = amount
 
-    def increment_amount_pix_seen(self):
-        self.amount_pictures_seen += 1
+    def increment_media_seen(self):
+        self.media_seen += 1
 
-    def is_pix_limit_met(self):
-        return self.amount_pictures_seen == self.limit_for_pictures
+    def is_media_limit_met(self):
+        return self.media_seen == self.limit_for_media
 
     def set_groups_per_page(self, amount):
         if amount == -1:
@@ -93,25 +94,7 @@ class Gm_Parser:
     def scrub_filename(self, filename):
         return re.sub('[<>:?*\\\/]', '', filename)
 
-    def load_group_messages(self, txts_per_page=None):
-
-        if txts_per_page is None or txts_per_page < 0 or txts_per_page > 100:
-            txts_per_page = '100'
-
-        self.message_params['limit'] = str(txts_per_page)
-
-        # if we can't request the previous message we have reached the end of all historical messages so abort function
-        # by returning False
-        try:
-            chat_log = self.request(self.message_url, target_params=self.message_params)
-        except:
-            return False
-
-        # retrieve everything before the most recent message in the set
-        # investigate the messages that are being ommitted
-        # print message before issuing the new request
-        # print(json.dumps(chat_log['messages'][0]['text']))
-
+    def save_media(self, chat_log):
         self.message_params['before_id'] = chat_log['messages'][0]['id']
         # print(json.dumps(chat_log['messages'][0]['text']))
         cwd = os.getcwd()
@@ -134,22 +117,42 @@ class Gm_Parser:
                 attachment_type = message_text['attachments'][0]['type']
                 # use json.dumps because the text will have emojis so we do this to ignore them
 
-                phrase_id = message_text['id']
+                message_id = message_text['id']
                 image_url = message_text['attachments'][0]['url']
-                # save_folder = '\\Pictures\\'
+                # save_folder = '\\media\\'
                 # phrase id is a particular text id
                 # urllib.request.retrieve will save the remote file for us
-                save_file = save_folder + '\\' + str(phrase_id) + save_file_types[attachment_type]
+                save_file = save_folder + '\\' + str(message_id) + save_file_types[attachment_type]
                 urllib.request.urlretrieve(image_url, filename=save_file)
                 print(message_text['attachments'][0])
                 # print('text: ', phrase, 'image url: ', image_url)
+                self.increment_media_seen()
+                if self.is_media_limit_met():
+                    self.save_media_complete = True
+                    return None
+        # Just to be consistent even though this is defaulted to none.
+        #  We want to say we arent done saving media from GM
+        self.save_media_complete = False
 
-                if self.limit_for_pictures is not None:
-                    self.increment_amount_pix_seen()
-                    if self.is_pix_limit_met():
-                        return False
+    def load_group_messages(self, txts_per_page=None):
+
+        if txts_per_page is None or txts_per_page < 0 or txts_per_page > 100:
+            txts_per_page = '100'
+
+        self.message_params['limit'] = str(txts_per_page)
+        # if we can't request the previous message we have reached the end of all historical messages so abort function
+        # by returning False
+        try:
+            chat_log = self.request(self.message_url, target_params=self.message_params)
+        except:
+            return False
+
+        self.save_media(chat_log)
+        # Return False because we want load_messages_to quit its while loop
+        # save_media_complete is a misnomer because we actually are stopping for an amount of saved media
+        if self.save_media_complete:
+            return False
 
         self.message_params['before_id'] = chat_log['messages'][-1]['id']
-
         # Return true so that we can continue parsing to the next message
         return True
