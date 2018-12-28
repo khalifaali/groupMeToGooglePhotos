@@ -47,7 +47,7 @@ to display its respective messages
 <br><code>gp.select_group_messages()</code>
 
 <h3>Save media</h3>
-You will need to call select_group_messages() before you call this method. <code>load_group_messages()</code> pulls back group messages, and calls the <code> save_media</code> function to download media from the groupMe gallery. The function will return True if there are more messages that can be loaded.
+You will need to call select_group_messages() before you call this method. <code>load_group_messages()</code> pulls back group messages, and calls the <code> save_media()</code> function to download media from the groupMe gallery. The function will return True if there are more messages that can be loaded.
 I will allow you to set limits when I have some more time, this is what I used for testing.
 <br><code>gp.load_group_messages()</code>
 
@@ -58,7 +58,7 @@ of recreating the directory.
 <h2>Optional Functions/Arguments for functions</h2>
 +Set amount of pictures and videos you want to save by providing a number to the amount argument. If no limit is present will save all images in group message gallery. Currently I haven't developed a solution to pull back just pictures or just videos. Suggested update could be to pass an optional flag into load messages that lets you specify what media you want back
 
-<code>set_pix_limit(amount)</code><br>
+<code>set_media_limit(amount)</code><br>
   --This must be called before load_group_messages() to take effect.
 
 +Set amount of messages displayed by assigning a number to txts_per_page keyword argument
