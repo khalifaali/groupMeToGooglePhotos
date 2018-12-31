@@ -43,12 +43,15 @@ def build_photos_service():
 def get_album_list(photos_service):
     private_album_list = photos_service.albums().list().execute()
     shared_album_list = photos_service.sharedAlbums().list().execute()
-    # we slice everything from the first one because the first objeect the album response doesnt have the title key
+    '''
+      we slice everything from the first one because the first objeect the 
+    private album response doesnt have the title key
+    '''
     private_album_list = private_album_list['albums'][1:]
     shared_album_list = shared_album_list['sharedAlbums']
     print(json.dumps(shared_album_list, indent=3))
-    return [album['title'] for album in private_album_list] + [album['title'] for album in shared_album_list if 'title'
-                                                               in album]
+    return [album['title'] for album in private_album_list] + \
+           [album['title'] for album in shared_album_list if 'title' in album]
 
 
 def create_shareable_album(photos_service, album_name):
