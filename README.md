@@ -75,6 +75,7 @@ of recreating the directory.
 
 
 <ul><em><b>Todo list</b></em>
+ <li><strike>Add logic so that if an album exists it doesnt create it again</strike></li>
  <li>Add option to add allow user to post shareable link to their groupchat. (However,will always display on console regardless)</li>
  <li>Need to make method to pull back filenames of media items in Target upload directory</li>
  <li>Refactor gp_upload code into a class</li>
