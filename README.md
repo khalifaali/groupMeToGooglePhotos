@@ -75,6 +75,8 @@ of recreating the directory.
 
 
 <ul><em><b>Todo list</b></em>
+ <li>Need to make method to pull back filenames of media items in Target upload directory</li>
+ <li>Refactor gp_upload code into a class</li>
  <li>Allow for access token to be given via command line argument</li>
  <li>Make sure dependancies can be easily installed</li>
  <li>v1.3 Add support to allow you to control what type of media you want pulled back whether it be pictures or videos</strike></li> 
