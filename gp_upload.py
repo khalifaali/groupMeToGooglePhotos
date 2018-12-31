@@ -2,7 +2,7 @@ __author__ = 'Khalif Ali'
 from google_auth_oauthlib.flow import InstalledAppFlow
 from pathlib import Path
 from googleapiclient.discovery import build
-import requests
+from pprint import pprint
 import json
 
 ...
@@ -27,7 +27,6 @@ def authorize(cred_file):
     print(dir(credentials))
     return credentials
 
-
 # this will be the main method we call to run
 # because we will need to pass the photos_service around to other methods.
 # No other methods can run without this method being called first
@@ -41,11 +40,50 @@ def build_photos_service():
     return photos_service
 
 
-def create_album(photos_service, album_name):
-    # test to see what is in the create method
-    resp = photos_service.albums().create(body={'album':{'title':album_name}}).execute()
-    print(json.dumps(resp, indent=3))
+def get_album_list(photos_service):
+    private_album_list = photos_service.albums().list().execute()
+    shared_album_list = photos_service.sharedAlbums().list().execute()
+    # we slice everything from the first one because the first objeect the album response doesnt have the title key
+    private_album_list = private_album_list['albums'][1:]
+    shared_album_list = shared_album_list['sharedAlbums']
+    print(json.dumps(shared_album_list, indent=3))
+    return [album['title'] for album in private_album_list] + [album['title'] for album in shared_album_list if 'title'
+                                                               in album]
 
+
+def create_shareable_album(photos_service, album_name):
+    # test to see what is in the create method
+    # album is actually a json response for creation of the album, will have album id, title, productUrl
+    current_albums = get_album_list(photos_service)
+    pprint(current_albums)
+    if album_name in current_albums:
+        print('Album already exist')
+        print('Aborting creation....')
+        return None
+    album = photos_service.albums().create(body={'album': {'title': album_name}}).execute()
+    print(json.dumps(album, indent=3))
+    # shared_album is a json reponse as a result of sharing the album, will have shareable_url,shared_token,isJoined
+    shared_album = photos_service.albums().share(albumId=album['id'],
+                                                 body={
+                                                     "sharedAlbumOptions": {
+                                                         "isCollaborative": "true",
+                                                         "isCommentable": "true"
+                                                     }}).execute()
+
+    print('Album:{} \nShareable Url {}'.format(album['title'], shared_album['shareInfo']['shareableUrl']))
+
+
+'''
+{
+  "sharedAlbumOptions": {
+    "isCollaborative": "true",
+    "isCommentable": "true"
+  }
+}
+
+Response
+
+'''
 
 # do albums().share(push album id)
 # create function to share album
@@ -66,7 +104,7 @@ So I will need access to the current directory structure and pull back the names
 def run():
     photos_service = build_photos_service()
 
-    create_album(photos_service, 'test')
+    create_shareable_album(photos_service, 'teste22')
 
 
 run()
