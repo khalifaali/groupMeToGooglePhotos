@@ -1,17 +1,20 @@
 # groupMeToGooglePhotos
 
-Essentially the script will pull as many pictures and videos you want and save them in the current working directory in a folder named after the selected group chat. All media saved will be named after its message ID given by groupme. Then it will upload that saved media to google photos. Written using Python 3.7.0
+Essentially the script will pull as many pictures and videos you want and save them in the current working directory in a folder named after the selected group chat. All media saved will be named after its message ID given by groupme. Then you can use the code found in gp_upload.py to upload that saved media to google photos. Written using Python 3.7.0
 <!DOCTYPE html>
 <h1>Hey, I'm Khalif and welcome to groupMeToGooglePhotos</h1>
 
 <p>For me the groupme gallery lacked the robustness of google photos and I found it quite hard to look for pictures because there was no way
 to search for faces, places, etc. So I sat and decided that I will use the GroupMe API and Google Photos API to help me achieve this goal</p>
 
+<h2><em>Updates</em></h2>
 <p>The script is still a work in progress but as of right now you can load group messages, and save pictures in a directory named after
- the target groupchat. I have plans to add functionality to allow you to upload pictures to google photos within the next few days </p>
+ the target groupchat. Functionality to upload to media to google photos has been added, but there seems to be a bug with uploading .jpeg/.jpg,.png files. Google accepts .mp4 files. </p>
+
+I have yet to integrate the google photos code because I am still testing and refactoring the code for it. However, the code can be found in gp_upload.py. As a note, debugging messages will be shown when code is run.
 
 
-<h2>Here is an example of how to use the code that I have written</h2>
+<h2>Here is an example of how to use the GroupMe code that I have written</h2>
 
 <pre>
 
