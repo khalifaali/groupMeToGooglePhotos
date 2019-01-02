@@ -11,7 +11,7 @@ to search for faces, places, etc. So I sat and decided that I will use the Group
 <p>The script is still a work in progress but as of right now you can load group messages, and save pictures in a directory named after
  the target groupchat. Functionality to upload to media to google photos has been added, but there seems to be a bug with uploading .jpeg/.jpg,.png files. Google is only accepting .mp4 files, however the files are not showing in the newly created album. Basically, nothing is being added to the albums that are created because of a google photos api bug. Nevertheless, you can upload the downloaded photos into google photos through the webapp.</p>
 
-I have yet to integrate the google photos code because I am still testing and refactoring the code for it. However, the code can be found in gp_upload.py. As a note, debugging messages will be shown when code is run.
+I have yet to integrate the google photos code because I am still testing and refactoring the code for it. However, the code can be found in gp_upload.py. As a note, debugging messages will be shown when code is run. Before you run the gp_upload.py code copy your credentials.json file into the same directory the script is in.
 
 
 <h2>Here is an example of how to use the GroupMe code that I have written</h2>
